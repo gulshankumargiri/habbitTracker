@@ -11,14 +11,31 @@ void main() async {
 
   tz.initializeTimeZones();
 
+  // Android ke liye
   const AndroidInitializationSettings initializationSettingsAndroid =
   AndroidInitializationSettings('@mipmap/ic_launcher');
 
-  const InitializationSettings initializationSettings =
-  InitializationSettings(android: initializationSettingsAndroid);
+  // iOS ke liye (agar kabhi use karega)
+  final DarwinInitializationSettings initializationSettingsIOS =
+  DarwinInitializationSettings(
+    requestAlertPermission: true,
+    requestBadgePermission: true,
+    requestSoundPermission: true,
+  );
+
+  final InitializationSettings initializationSettings = InitializationSettings(
+    android: initializationSettingsAndroid,
+    iOS: initializationSettingsIOS,
+  );
 
   // Yaha await lagana zaruri hai
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+  // Android 13+ ke liye notification permission mangni zaruri hai
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+      AndroidFlutterLocalNotificationsPlugin>()
+      ?.requestNotificationsPermission();
 
   runApp(const MyApp());
 }

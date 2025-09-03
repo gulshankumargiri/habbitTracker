@@ -1,35 +1,38 @@
 import 'dart:convert';
 
-class Reminder{
+class Reminder {
   final String day;
-  final String act;
+  final String activity; // ✅ act -> activity (match karne ke liye)
+
   final String time;
 
-  Reminder( {
-    required this.day ,
-    required this.act ,
-    required this.time, String? activity,
-});
+  Reminder({
+    required this.day,
+    required this.activity,
+    required this.time,
+  });
 
   @override
   String toString() {
-    return 'Reminder{day: $day, act: $act, time: $time}';
+    return 'Reminder{day: $day, activity: $activity, time: $time}';
   }
-Map<String,dynamic> toMap(){
-    return {
-      'day':day,
-      'activity':act,
-      'time':time,
-    };
-}
 
-factory Reminder.fromMap(Map<String,dynamic> map){
+  Map<String, dynamic> toMap() {
+    return {
+      'day': day,
+      'activity': activity,
+      'time': time,
+    };
+  }
+
+  factory Reminder.fromMap(Map<String, dynamic> map) {
     return Reminder(
-      day:map['day'],
-      act:map['activity'],
-      time:map['time'],
+      day: map['day'],
+      activity: map['activity'],
+      time: map['time'],
     );
-}
+  }
+
   String toJson() => json.encode(toMap());
 
   factory Reminder.fromJson(String source) =>
